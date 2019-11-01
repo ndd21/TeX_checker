@@ -239,12 +239,12 @@ def checkbib(fstr):
         if not re.search(r"\{thebibliography}{\d{"+str(nd)+r"}\}",fstr):
             print(purple+"Possible problem with number of bibitems.")
             print(blue+"Number of bibitems: "+green+str(nb)+default)
-            bibmatch=re.search(r"\{thebibliography\}\{\d*\}")
+            bibmatch=re.search(r"\{thebibliography\}\{\d*\}",fstr)
             if bibmatch:
-                print(blue+"File contains     : "+purple+bibmatch.group(0)
-                      +default)
+                print(blue+"File contains     : "+default+bibmatch.group(0)
+                      +"\n")
             else:
-                print(purple+"thebibliography is missing."+default)
+                print(purple+"thebibliography is missing."+default+"\n")
 
 
 def checkfoils(fstr):
