@@ -293,7 +293,7 @@ def checkacronyms(fstr):
     undefined=[]
     for a in acronyms:
         if a in definedacronyms or romannumeralre.search(a): continue
-        if not re.search(r"\("+a+r"(?:\\@)?\).*\s"+a
+        if not re.search(r"\("+a+r"(?:\\@|s)?\).*\s"+a
                          +r"(?:\\@)?[\s\.,;\.\!\?~']",fstr,re.DOTALL):
             undefined.append(a)
     if undefined:
