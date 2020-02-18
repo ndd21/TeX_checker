@@ -330,7 +330,7 @@ print("\n"+blue+"TeX Checker")
 print("==========="+default+"\n")
 
 foilsre=re.compile(r"\\documentclass.*foils",re.MULTILINE)
-apsre=re.compile(r"\\documentclass.*(?:prb\s*[,\]]|achemso)",re.MULTILINE)
+aipre=re.compile(r"\\documentclass.*(?:aip\s*[,\]]|achemso)",re.MULTILINE)
 natre=re.compile(r"\\documentclass.*nature",re.MULTILINE)
 
 for arg in sys.argv[1:]:
@@ -358,8 +358,8 @@ for arg in sys.argv[1:]:
 #   writeout("file_minus_comments_eqns.tex",fstr_noeqns)
 #   writeout("file_minus_comments_math.tex",fstr_nomath)
 
-    # What sort of TeX file do we have (Phys. Rev. B / Nature / Foils)?
-    aps=bool(apsre.search(fstr)) ; nat=bool(natre.search(fstr))
+    # What sort of TeX file do we have (AIP / Nature / Foils)?
+    aip=bool(aipre.search(fstr)) ; nat=bool(natre.search(fstr))
     foils=bool(foilsre.search(fstr))
 
     checknonascii(fstr)
@@ -396,7 +396,7 @@ for arg in sys.argv[1:]:
         checknotfoils(fstr)
 
     # Make checks specific to certain journals.
-    if aps or nat:
+    if aip or nat:
         checkwordcite(fstr_noeqns)
     else:
         checksuperscriptcite(fstr_noeqns)
