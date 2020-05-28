@@ -183,7 +183,7 @@ def checkeqref(fstr):
 
 def checkeqspace(fstr):
     """Look for e.g. "Eq. "."""
-    x=re.findall(r"^$(?:.*[ \t~])?(?:[eE]qn?|[rR]ef|[fF]ig|[sS]ec)s?\.?"
+    x=re.findall(r"^(?:.*[ \t~])?(?:[eE]qn?|[rR]ef|[fF]ig|[sS]ec)s?\.?"
                  r"(?:[ \t~].*)?$",fstr,re.MULTILINE)
     reportissues(x,r'missing "\ "')
 
