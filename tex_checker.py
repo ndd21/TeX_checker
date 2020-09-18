@@ -40,7 +40,7 @@ def stripcomments(fstr):
 def stripeqns(fstr):
     """Get rid of standalone equations."""
     fstr_new=re.sub(r'(\\begin\{(math|equation\*?|displaymath'
-                    r'|eqnarray\*?|align)\}|\\[\(\[]).*?(\\\end\{(math'
+                    r'|eqnarray\*?|align)\}|\\[\(\[]).*?(\\end\{(math'
                     r'|equation\*?|displaymath|eqnarray\*?|align)\}|\\[\]\)])',
                     r"\1 xxx \3",fstr,flags=re.DOTALL)
     return fstr_new
