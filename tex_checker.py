@@ -2,11 +2,9 @@
 # TeX Checker    NDD   21/03/08  (translated from bash/awk to python, 30/08/19)
 # Script for performing various checks on TeX files.
 
-try:
-    import os,re,sys,math
-    import textwrap as tw
-except ImportError:
-    sys.exit("Need the following modules: os, re, sys, math and textwrap.")
+from __future__ import absolute_import
+import re,sys,math
+import textwrap as tw
 
 # Colours.
 default="\033[0m" ; black="\033[30m" ; red="\033[31m"
@@ -61,7 +59,7 @@ def reportissues(x,message):
 
 
 def checkat(fstr):
-    """Check for missing \@."""
+    r"""Check for missing \@."""
     x=re.findall(r"^.*\w[A-Z][\)\]']*\.[\)\]']*(?:[ \t~].*)?$",fstr,
                  re.MULTILINE)
     reportissues(x,r'need for "\@"')
@@ -69,7 +67,7 @@ def checkat(fstr):
 
 def checkdoubledots(fstr):
     """Look for double dots."""
-    x=re.findall("^.*(?<!right)\.\..*$",fstr,re.MULTILINE)
+    x=re.findall(r"^.*(?<!right)\.\..*$",fstr,re.MULTILINE)
     reportissues(x,"double dots")
 
 
@@ -175,7 +173,7 @@ def checkrep(fstr):
 
 
 def checkeqref(fstr):
-    """Look for e.g. "Eq.\ \ref"."""
+    r"""Look for e.g. "Eq.\ \ref"."""
     x=re.findall(r"^(?:.*[ \t~])?(?:[eE]qn?s?\.?\\?|[eE]quations?)[\s~]"
                  r"+(?:\\ref|\d).*$",fstr,re.MULTILINE)
     reportissues(x,r'"Eq.\ \ref" (brackets needed)')
@@ -272,13 +270,13 @@ def checknotfoils(fstr):
 
 
 def checkwordcite(fstr):
-    """Look for " \cite"."""
+    r"""Look for " \cite"."""
     x=re.findall(r"^(?:.*[ \t~])?\\cite.*$",fstr,re.MULTILINE)
     reportissues(x,r'" \cite"')
 
 
 def checksuperscriptcite(fstr):
-    """Look for ".\cite"."""
+    r"""Look for ".\cite"."""
     x=re.findall(r"^.*[^\s~\n]\\cite.*$",fstr,re.MULTILINE)
     reportissues(x,r'".\cite"')
 
@@ -334,7 +332,7 @@ aipre=re.compile(r"\\documentclass.*(?:aip\s*[,\]]|achemso)",re.MULTILINE)
 natre=re.compile(r"\\documentclass.*nature",re.MULTILINE)
 
 for arg in sys.argv[1:]:
-    if arg=="-help" or arg=="--help":
+    if arg in ("-help","--help"):
         print(tw.fill(usage))
         sys.exit(0)
 
