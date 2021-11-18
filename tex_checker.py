@@ -224,7 +224,7 @@ def checkminus(fstr):
 def checknonascii(fstr):
     """Look for non-ASCII characters."""
     x=re.findall(r"^.*[^\x20-\x7E\x0A\x0D\n].*$",fstr,re.MULTILINE)
-    reportissues(x,"non-printable-ASCII character(s)")
+    reportissues(x,"non-printable-ASCII or tab character(s)")
     if "\r" in fstr: print(purple+"MS-DOS-style carriage returns.  "
                            "Run dos2unix."+default+"\n")
 
@@ -288,15 +288,22 @@ def checkacronyms(fstr):
                      "GNU","AMD","AOL","BAE","BMW","BP","CV","HSBC","IBM",
                      "KFC","CCSD")
     acronyms=set(re.findall(r"\s([A-Z][A-Z\d]+)(?:\\@)?[\s\.,;\.\!\?~']",fstr))
-    undefined=[]
+    undefined=[] ; usedtoosoon=[]
     for a in acronyms:
         if a in definedacronyms or romannumeralre.search(a): continue
         if not re.search(r"\("+a+r"(?:\\@|s)?\).*\s"+a
                          +r"(?:\\@)?[\s\.,;\.\!\?~']",fstr,re.DOTALL):
             undefined.append(a)
+        if re.search(r"\s"+a+r"(?:\\@)?[\s\.,;\.\!\?~'].*\("+a+r"(?:\\@|s)?\)",
+                     fstr,re.DOTALL):
+            usedtoosoon.append(a)
     if undefined:
         print(purple+"Possible need to define the following acronyms:"+default)
         print(tw.fill(", ".join(undefined))+"\n")
+    if usedtoosoon:
+        print(purple+"The following acronyms may have been used before they "
+              "are defined:"+default)
+        print(tw.fill(", ".join(usedtoosoon))+"\n")
 
 
 def checkmultipleacronyms(fstr):
