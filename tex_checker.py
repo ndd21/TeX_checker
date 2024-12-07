@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # TeX Checker    NDD   21/03/08  (translated from bash/awk to python, 30/08/19)
 # Script for performing various checks on TeX files.
 
